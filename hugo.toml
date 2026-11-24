@@ -1,0 +1,120 @@
+baseURL      = "https://ad-b-r.github.io/"
+title        = "Adi Batra"
+locale       = "en-US"
+theme        = "hello-friend-ng"
+timeZone     = "Asia/Kolkata"
+
+enableRobotsTXT = true
+enableEmoji     = true
+
+# No analytics, no comments, no third-party trackers.
+[privacy]
+  [privacy.disqus]
+    disable = true
+  [privacy.googleAnalytics]
+    disable = true
+  [privacy.instagram]
+    disable = true
+  [privacy.x]
+    disable = true
+  [privacy.vimeo]
+    disable = true
+  [privacy.youtube]
+    privacyEnhanced = true
+
+[caches.images]
+  dir = ":cacheDir/images"
+
+[pagination]
+  pagerSize = 20
+
+[taxonomies]
+  tag = "tags"
+
+[permalinks]
+  posts = "/posts/:slug/"
+
+# ---------------------------------------------------------------------------
+# Markdown: math (KaTeX, rendered at build time) + code highlighting (Chroma)
+# ---------------------------------------------------------------------------
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.goldmark.extensions.passthrough]
+    enable = true
+    [markup.goldmark.extensions.passthrough.delimiters]
+      block  = [['\[', '\]'], ['$$', '$$']]
+      inline = [['\(', '\)'], ['$', '$']]
+  [markup.highlight]
+    # Server-side highlighting, inline styles: no JS needed.
+    style       = "dracula"
+    noClasses   = true
+    codeFences  = true
+    guessSyntax = false
+    tabWidth    = 4
+
+# ---------------------------------------------------------------------------
+# Menu (theme sorts items by identifier, hence the numeric prefixes)
+# ---------------------------------------------------------------------------
+[menu]
+  [[menu.main]]
+    identifier = "1-projects"
+    name       = "projects"
+    url        = "/projects/"
+  [[menu.main]]
+    identifier = "2-posts"
+    name       = "posts"
+    url        = "/posts/"
+  [[menu.main]]
+    identifier = "3-cv"
+    name       = "cv.pdf"
+    url        = "/cv.pdf"
+
+[params]
+  description = "Adi Batra: CS undergrad at BITS Pilani, Goa. ML, transformers, CUDA."
+  keywords    = "machine learning, deep learning, CUDA, transformers, BITS Pilani Goa"
+  homeSubtitle = "CS undergrad at BITS Pilani, Goa. ML enthusiast."
+
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02"
+
+  enableThemeToggle    = true   # dark by default (see assets/js/main.js), toggle kept
+  enableSharingButtons = false
+  enableReadingTime    = true
+  enableGlobalLanguageMenu = false
+  disableReadOtherPosts = false
+
+  # Links shown in the home page terminal.
+  github = "https://github.com/Ad-B-R"
+  cv     = "/cv.pdf"
+  # TODO(optional): uncomment to show on the home page.
+  # email    = "you@example.com"
+  # linkedin = "https://www.linkedin.com/in/your-handle"
+
+  [params.author]
+    name = "Adi Batra"
+
+  [params.logo]
+    logoMark           = ">"
+    logoText           = "adi@goa:~/"
+    logoHomeLink       = "/"
+    logoCursorPathname = true
+    logoCursorColor    = "#7ee787"
+
+  [params.footer]
+    trademark = 2026
+    author    = true
+    rss       = false
+    copyright = false
+    bottomText = [
+      "built with <a href=\"https://gohugo.io\">hugo</a> + <a href=\"https://github.com/rhazdon/hugo-theme-hello-friend-ng\">hello-friend-ng</a>",
+      "<a href=\"https://github.com/Ad-B-R/Ad-B-R.github.io\">source</a>",
+      "no cookies, no trackers",
+    ]
+
+  [params.favicon.color]
+    mask          = "#1b1c1d"
+    msapplication = "#1b1c1d"
+    theme         = "#1b1c1d"

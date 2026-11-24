@@ -1,0 +1,2 @@
+{{- /* Chroma has no CUDA lexer; CUDA is C++ plus a few qualifiers, so use the C++ lexer. */ -}}
+{{- transform.Highlight .Inner "cpp" .Options -}}

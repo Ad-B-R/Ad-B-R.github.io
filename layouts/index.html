@@ -1,0 +1,62 @@
+{{ define "main" }}
+{{- $projects := (where site.RegularPages "Section" "projects").ByWeight }}
+{{- $projectsURL := "projects/" | relURL }}
+<div class="content">
+  <main class="home">
+    <section class="term" id="term" aria-label="Introduction">
+      <div class="term__bar" aria-hidden="true">
+        <span class="term__dot"></span><span class="term__dot"></span><span class="term__dot"></span>
+        <span class="term__title">adi@goa: ~</span>
+      </div>
+
+      <div class="term__body">
+        {{- /* Each step: --d = animation delay (s), --n = characters to type. */}}
+        <p class="term__cmd" style="--d:.15s; --n:6"><span class="term__ps1" aria-hidden="true">$</span> <span class="term__typed">whoami</span></p>
+        <div class="term__out" style="--d:.55s">
+          <h1 class="term__name">{{ site.Params.author.name }}</h1>
+          <p>3rd-year CS undergrad at BITS Pilani, Goa.</p>
+          <p>ML enthusiast.</p>
+        </div>
+
+        <p class="term__cmd" style="--d:.75s; --n:12"><span class="term__ps1" aria-hidden="true">$</span> <span class="term__typed">ls projects/</span></p>
+        <ul class="term__out term__ls" style="--d:1.35s">
+          {{- range $projects }}
+          <li>
+            <a href="{{ $projectsURL }}#{{ .Slug }}">{{ .Slug }}/</a>
+            <span class="term__comment"># {{ .Title }}</span>
+          </li>
+          {{- end }}
+        </ul>
+        <p class="term__out term__hint" style="--d:1.35s">
+          <a href="{{ $projectsURL }}">→ all projects, with descriptions and code</a>
+        </p>
+
+        <p class="term__cmd" style="--d:1.55s; --n:9"><span class="term__ps1" aria-hidden="true">$</span> <span class="term__typed">ls links/</span></p>
+        <p class="term__out term__links" style="--d:2.05s">
+          {{- with site.Params.github }}<a href="{{ . }}" rel="me noopener">github</a>{{ end }}
+          {{- with site.Params.cv }}<a href="{{ . | relURL }}">cv.pdf</a>{{ end }}
+          <a href="{{ "posts/" | relURL }}">posts/</a>
+          {{- with site.Params.email }}<a href="mailto:{{ . }}">email</a>{{ end }}
+          {{- with site.Params.linkedin }}<a href="{{ . }}" rel="me noopener">linkedin</a>{{ end }}
+        </p>
+
+        <p class="term__cmd term__prompt" style="--d:2.15s"><span class="term__ps1" aria-hidden="true">$</span> <span class="term__cursor" aria-hidden="true"></span></p>
+      </div>
+    </section>
+    <script>
+      // Skip the typing animation on repeat visits in a tab, or on any click/key.
+      (function () {
+        var t = document.getElementById("term");
+        function done() { t.classList.add("term--done"); }
+        try {
+          if (sessionStorage.getItem("typed")) done();
+          sessionStorage.setItem("typed", "1");
+        } catch (e) {}
+        ["keydown", "pointerdown"].forEach(function (ev) {
+          window.addEventListener(ev, done, { once: true });
+        });
+      })();
+    </script>
+  </main>
+</div>
+{{ end }}

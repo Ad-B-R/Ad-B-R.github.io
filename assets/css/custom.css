@@ -1,0 +1,339 @@
+/* ==========================================================================
+   Site-specific styles layered on top of hello-friend-ng.
+   ========================================================================== */
+
+:root,
+:root[data-theme="dark"] {
+  --accent: #7ee787;
+  --accent-2: #79c0ff;
+  --muted: #8b8b96;
+  --term-bg: #1b1c1d;
+  --term-bar: #2a2b2d;
+  --term-border: #3b3d42;
+  --label-bg: #2e3035;
+  --todo: #ffb86c;
+}
+
+:root[data-theme="light"] {
+  --accent: #116329;
+  --accent-2: #0a58ca;
+  --muted: #6e6e78;
+  --term-bg: #fafafa;
+  --term-bar: #eaeaea;
+  --term-border: #dcdcdc;
+  --label-bg: #eaeaea;
+  --todo: #9a4d00;
+}
+
+.term,
+.projects__title,
+.project__labels,
+.project__links,
+.logo {
+  font-family: ui-monospace, "SFMono-Regular", "Cascadia Code", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  letter-spacing: 0;
+}
+
+/* ------------------------------------------------------------------ home -- */
+
+.home {
+  width: 100%;
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 0 20px;
+  text-align: left;
+}
+
+.term {
+  border: 1px solid var(--term-border);
+  border-radius: 10px;
+  background: var(--term-bg);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.term__bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--term-bar);
+  border-bottom: 1px solid var(--term-border);
+}
+
+.term__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff5f56;
+}
+.term__dot:nth-child(2) { background: #ffbd2e; }
+.term__dot:nth-child(3) { background: #27c93f; }
+
+.term__title {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 0.85rem;
+  color: var(--muted);
+  transform: translateX(-26px); /* optically centre against the dots */
+}
+
+.term__body {
+  padding: 18px 22px 22px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.term__body p,
+.term__body ul {
+  margin: 0;
+}
+
+.term__cmd {
+  margin-top: 14px !important;
+  white-space: nowrap;
+}
+.term__cmd:first-child { margin-top: 0 !important; }
+
+.term__ps1 {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.term__typed {
+  display: inline-block;
+  vertical-align: bottom;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.term__name {
+  font-size: 1.6rem;
+  line-height: 1.3;
+  margin: 4px 0 2px;
+  color: var(--accent);
+}
+
+.term__ls {
+  list-style: none;
+  padding: 0;
+}
+
+.term__ls li {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.5ch;
+}
+
+.term__ls a {
+  color: var(--accent-2);
+  font-weight: bold;
+  min-width: 22ch;
+}
+
+.term__comment,
+.term__hint {
+  color: var(--muted);
+}
+
+.term__hint {
+  margin-top: 4px !important;
+}
+
+.term__hint a,
+.term__links a {
+  color: inherit;
+}
+
+.term__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2.5ch;
+}
+
+.term__links a {
+  color: var(--accent-2);
+  font-weight: bold;
+}
+
+.term a:hover,
+.term a:focus-visible {
+  text-decoration: underline;
+}
+
+.term__cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  vertical-align: text-bottom;
+  background: var(--accent);
+  animation: term-blink 1s steps(1) infinite;
+}
+
+/* --- typing animation (progressive enhancement; content is in the HTML) --- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .term__typed {
+    width: 0;
+    animation: term-type calc(var(--n) * 55ms) steps(var(--n), end) var(--d) forwards;
+  }
+  .term__cmd,
+  .term__out {
+    opacity: 0;
+    animation: term-show 0.01s linear var(--d) forwards;
+  }
+  .term--done .term__typed,
+  .term--done .term__cmd,
+  .term--done .term__out {
+    animation: none;
+    opacity: 1;
+    width: auto;
+  }
+}
+
+@keyframes term-type {
+  to { width: calc(var(--n) * 1ch); }
+}
+@keyframes term-show {
+  to { opacity: 1; }
+}
+@keyframes term-blink {
+  50% { opacity: 0; }
+}
+
+/* -------------------------------------------------------------- projects -- */
+
+.projects__title {
+  font-size: 1.6rem;
+  margin-bottom: 0.25em;
+}
+
+.projects__lede {
+  color: var(--muted);
+  margin-top: 0;
+}
+
+.project {
+  border-left: 3px solid var(--accent);
+  padding: 2px 0 2px 18px;
+  margin: 36px 0;
+  scroll-margin-top: 24px;
+}
+
+.project:target {
+  background: var(--label-bg);
+  border-radius: 0 8px 8px 0;
+}
+
+.project__title {
+  display: block;
+  font-size: 1.3rem;
+  margin: 0 0 6px;
+}
+
+.project__title a {
+  text-decoration: none;
+}
+.project__title a:hover {
+  text-decoration: underline;
+}
+
+.project__desc {
+  margin: 6px 0 10px;
+}
+
+.project__labels {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0;
+  margin: 0 0 10px;
+  font-size: 0.8rem;
+}
+
+.project__labels li {
+  background: var(--label-bg);
+  border-radius: 4px;
+  padding: 1px 8px;
+}
+
+.project__labels li::before {
+  content: "#";
+  color: var(--muted);
+}
+
+.project__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2ch;
+  margin: 0;
+}
+
+.project__links a {
+  color: var(--accent-2);
+  text-decoration: none;
+  font-weight: bold;
+}
+.project__links a:hover {
+  text-decoration: underline;
+}
+
+/* Only rendered under `hugo server` (development), never on the live site. */
+.todo {
+  display: inline-block;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  color: var(--todo);
+  border: 1px dashed var(--todo);
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin: 4px 0;
+}
+
+/* ----------------------------------------------------------------- code -- */
+
+/* Chroma output: undo leftovers from the theme's Prism stylesheet. */
+.highlight pre,
+.highlight code {
+  text-shadow: none !important;
+}
+.highlight pre {
+  padding: 14px 18px;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+/* Long display equations scroll instead of breaking the layout on phones. */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;
+}
+
+/* --------------------------------------------------------------- mobile -- */
+
+@media (max-width: 684px) {
+  .home {
+    margin: 16px auto;
+    padding: 0 12px;
+  }
+  .term__body {
+    padding: 14px 14px 18px;
+    font-size: 0.9rem;
+  }
+  .term__name {
+    font-size: 1.3rem;
+  }
+  .term__ls li {
+    flex-direction: column;
+    margin-bottom: 6px;
+  }
+  .term__ls a {
+    min-width: 0;
+  }
+  .term__title {
+    transform: none;
+  }
+}

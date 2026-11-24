@@ -1,0 +1,21 @@
+{{- /* Hooked into the theme's head.html. */ -}}
+
+{{- /* Dark by default; set before first paint so there is no light flash. */ -}}
+<script>
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem("theme"); } catch (e) {}
+    document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");
+  })();
+</script>
+<meta name="color-scheme" content="dark light">
+
+{{- with resources.Get "css/custom.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+{{- end }}
+
+{{- /* KaTeX CSS (self-hosted), only on pages that actually contain math. */ -}}
+{{- $_ := .Content }}
+{{- if .Store.Get "hasMath" }}
+<link rel="stylesheet" href="{{ "katex/katex.min.css" | relURL }}">
+{{- end }}

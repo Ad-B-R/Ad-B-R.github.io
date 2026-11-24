@@ -1,0 +1,17 @@
+{{- /*
+  Overrides the theme partial: Prism is dropped because code is highlighted at
+  build time by Hugo (Chroma), which also knows CUDA. Prism would re-process
+  those blocks and strip the highlighting.
+*/ -}}
+{{ $main := resources.Get "js/main.js" }}
+{{ $menu := resources.Get "js/menu.js" }}
+{{ $js := slice $main $menu | resources.Concat "bundle.js" | resources.Minify | resources.Fingerprint "sha512" }}
+<script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+
+{{ if .Page.Store.Get "hasMermaid" }}
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  const dark = document.documentElement.getAttribute("data-theme") !== "light";
+  mermaid.initialize({ startOnLoad: true, theme: dark ? "dark" : "default" });
+</script>
+{{ end }}

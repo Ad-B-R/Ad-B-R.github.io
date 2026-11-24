@@ -1,0 +1,37 @@
+{{ define "main" }}
+<div class="content">
+  <main class="post projects">
+    <h1 class="projects__title"><span class="term__ps1" aria-hidden="true">$</span> ls -l projects/</h1>
+    {{ with .Description }}<p class="projects__lede">{{ . }}</p>{{ end }}
+
+    {{ range .Pages.ByWeight }}
+    <article class="project" id="{{ .Slug }}">
+      <h2 class="project__title">
+        {{- if .Params.github }}
+        <a href="{{ .Params.github }}">{{ .Title }}</a>
+        {{- else }}
+        {{ .Title }}
+        {{- end }}
+      </h2>
+
+      {{ if and .Params.todo hugo.IsDevelopment }}
+      <p class="todo">TODO: {{ .Params.todo }}</p>
+      {{ end }}
+
+      <p class="project__desc">{{ .Description }}</p>
+
+      {{ with .Params.labels }}
+      <ul class="project__labels" aria-label="Tags">
+        {{ range . }}<li>{{ . }}</li>{{ end }}
+      </ul>
+      {{ end }}
+
+      <p class="project__links">
+        {{ with .Params.github }}<a href="{{ . }}">[github]</a>{{ end }}
+        {{ range .Params.links }}<a href="{{ .url }}">[{{ .name }}]</a>{{ end }}
+      </p>
+    </article>
+    {{ end }}
+  </main>
+</div>
+{{ end }}
